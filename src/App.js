@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { ListGroup } from "react-bootstrap";
 import "./App.css";
 //import Test from "./components/test/index.js";
@@ -14,6 +14,17 @@ function App() {
 
   const [isInputShow, setInputShow] = useState(false),
     [todoList, setTodoList] = useState([]);
+
+  useEffect(() => {
+    const todoListInLocalStorage =
+      JSON.parse(localStorage.getItem("TodoList")) || [];
+    setTodoList(todoListInLocalStorage);
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("TodoList", JSON.stringify(todoList));
+  }, [todoList]);
+
   const addItem = useCallback((value) => {
     const dataItem = {
       id: new Date().getTime(),
@@ -22,7 +33,6 @@ function App() {
     };
 
     setTodoList((list) => [...list, dataItem]);
-
     setInputShow(false);
   }, []);
 
