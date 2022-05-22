@@ -1,8 +1,9 @@
-import React, { useEffect, useReducer } from "react";
+import React, { useReducer } from "react";
 import { ListGroup, Form, ButtonGroup, Button } from "react-bootstrap";
 
 function TodoItem(props) {
-  const { data } = props;
+  const { data, setModalShow, setId } = props;
+
   const [checked, toggle] = useReducer((checked) => !checked, data.isCompleted);
 
   if (data) {
@@ -16,9 +17,18 @@ function TodoItem(props) {
           <Form.Group className="mb-3" controlId="formBasicCheckbox">
             <Form.Check type="checkbox" checked={checked} onChange={toggle} />
           </Form.Group>
+
           <div className="ms-2 me-auto">{data.content}</div>
+
           <ButtonGroup aria-label="">
-            <Button variant="primary" size="sm">
+            <Button
+              variant="primary"
+              size="sm"
+              onClick={() => {
+                setModalShow(true);
+                setId(data.id);
+              }}
+            >
               View
             </Button>
             <Button variant="warning" size="sm">

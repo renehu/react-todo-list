@@ -4,6 +4,7 @@ import "./App.css";
 //import Test from "./components/test/index.js";
 import AddInput from "./components/AddInput";
 import Header from "./components/Header";
+import TodoModal from "./components/Modal";
 import TodoItem from "./components/TodoItem";
 
 function App() {
@@ -36,19 +37,47 @@ function App() {
     setInputShow(false);
   }, []);
 
+  const [modalShow, setModalShow] = useState(true);
+
+  const [currentId, setId] = useState(null);
+  const [currentItem, setItem] = useState();
+
+  useEffect(() => {
+    getItem();
+  }, [currentId]);
+
+  const getItem = () => {
+    const item = todoList.find((i) => i.id === currentId);
+    setItem(item);
+  };
+
   return (
     // <div className="App">
     //   <Test title={title} changeTitle={changeTitleFn} />
     // </div>
     <>
       <Header openInput={() => setInputShow((isShow) => !isShow)} />
+
       <AddInput isInputShow={isInputShow} addItem={addItem} />
 
       <ListGroup as="ul">
         {todoList.map((item, index) => {
-          return <TodoItem data={item} key={index} />;
+          return (
+            <TodoItem
+              data={item}
+              key={index}
+              setModalShow={setModalShow}
+              setId={setId}
+            />
+          );
         })}
       </ListGroup>
+
+      <TodoModal
+        data={currentItem}
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+      />
     </>
   );
 }
