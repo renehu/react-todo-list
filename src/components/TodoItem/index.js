@@ -31,7 +31,14 @@ function TodoItem(props) {
             >
               View
             </Button>
-            <Button variant="warning" size="sm">
+            <Button
+              variant="warning"
+              size="sm"
+              onClick={() => {
+                setModalShow(true);
+                setId(data.id);
+              }}
+            >
               Edit
             </Button>
             <Button variant="danger" size="sm">

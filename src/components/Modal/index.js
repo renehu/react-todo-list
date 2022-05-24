@@ -6,7 +6,7 @@ function TodoModal(props) {
 
   console.log(data);
 
-  return show ? (
+  return show && data ? (
     <Modal
       {...props}
       size="lg"
@@ -18,8 +18,8 @@ function TodoModal(props) {
       </Modal.Header>
 
       <Modal.Body>
-        <h4>{data.id}</h4>
-        <p>{data.content}</p>
+        <h6>Time: {new Date(data.id).toString()}</h6>
+        <p>Event: {data.content}</p>
       </Modal.Body>
       <Modal.Footer>
         <Button onClick={props.onHide}>Close</Button>
